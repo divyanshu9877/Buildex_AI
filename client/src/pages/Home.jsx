@@ -130,8 +130,8 @@ function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-5xl md:text-7xl font-bold tracking-tight"
                 >
-                    Build Stunning Websites <br />
-                    <span className='bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent'>with AI</span>
+                    Build Stunning Websites <br />with
+                    <span className='bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent'> AI</span>
                 </motion.h1>
 
                 <motion.p
@@ -158,7 +158,7 @@ function Home() {
                         >
                             <h1 className='text-xl font-semibold mb-3'>{h}</h1>
                             <p className='text-sm text-zinc-400'>
-                                GenWeb.ai builds real websites — clean code,
+                                Buildex.ai builds real websites — clean code,
                                 animations, responsiveness and scalable structure.
                             </p>
 
@@ -205,7 +205,7 @@ function Home() {
 
 
             <footer className='border-t border-white/10 py-10 text-center text-sm text-zinc-500'>
-                &copy; {new Date().getFullYear()} GenWeb.ai
+                &copy; {new Date().getFullYear()} Buildex.ai
             </footer>
 
             {openLogin && <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} />}
