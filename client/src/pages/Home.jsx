@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from "motion/react"
 import LoginModal from '../components/LoginModal'
 import { useDispatch, useSelector } from 'react-redux'
-import { Coins } from "lucide-react"
+import { Coins, Sun, Moon } from "lucide-react"
 import { serverUrl } from '../App'
 import axios from 'axios'
 import { setUserData } from '../redux/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { ThemeContext } from '../context/ThemeContext'
 function Home() {
 
     const highlights = [
@@ -21,6 +22,8 @@ function Home() {
     const [websites, setWebsites] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { theme, toggleTheme } = React.useContext(ThemeContext)
+
     const handleLogOut = async () => {
         console.log("logout click")
         try {
@@ -49,30 +52,33 @@ function Home() {
         handleGetAllWebsites()
     }, [userData])
     return (
-        <div className='relative min-h-screen bg-[#040404] text-white overflow-hidden'>
+        <div className='relative min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 overflow-hidden'>
             <motion.div
                 initial={{ y: -40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className='fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/10'
+                className='fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700'
             >
                 <div className='max-w-7xl mx-auto px-6 py-4 flex justify-between items-center'>
                     <div className='text-lg font-semibold'>
                         Buildex.ai
                     </div>
                     <div className='flex items-center gap-5'>
-                        <div className='hidden md:inline text-sm text-zinc-400 hover:text-white cursor-pointer' onClick={() => navigate("/pricing")}>
+                        <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition">
+                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                        </button>
+                        <div className='hidden md:inline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-50 cursor-pointer' onClick={() => navigate("/pricing")}>
                             Pricing
                         </div>
-                        {userData && <div className='hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm cursor-pointer hover:bg-white/10 transition' onClick={() => navigate("/pricing")}>
+                        {userData && <div className='hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition' onClick={() => navigate("/pricing")}>
                             <Coins size={14} className='text-yellow-400' />
-                            <span className='text-zinc-300'>Credits</span>
+                            <span className='text-gray-700 dark:text-gray-300'>Credits</span>
                             <span>{userData.credits}</span>
                             <span className='font-semibold'>+</span>
                         </div>}
 
 
-                        {!userData ? <button className='px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm'
+                        {!userData ? <button className='px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm'
                             onClick={() => setOpenLogin(true)}
                         >
 
@@ -83,7 +89,7 @@ function Home() {
                             :
                             <div className='relative'>
                                 <button className='flex items-center' onClick={() => setOpenProfile(!openProfile)}>
-                                    <img src={userData?.avatar || `https://ui-avatars.com/api/?name=${userData.name}`} alt="" referrerPolicy='no-referrer' className='w-9 h-9 rounded-full border border-white/20 object-cover' />
+                                    <img src={userData?.avatar || `https://ui-avatars.com/api/?name=${userData.name}`} alt="" referrerPolicy='no-referrer' className='w-9 h-9 rounded-full border border-gray-300 dark:border-gray-600 object-cover' />
                                 </button>
                                 <AnimatePresence>
                                     {openProfile && (
@@ -92,22 +98,22 @@ function Home() {
                                                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                                                className="absolute right-0 mt-3 w-60 z-50 rounded-xl bg-[#0b0b0b] border border-white/10 shadow-2xl overflow-hidden"
+                                                className="absolute right-0 mt-3 w-60 z-50 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-2xl overflow-hidden"
                                             >
-                                                <div className='px-4 py-3 border-b border-white/10'>
+                                                <div className='px-4 py-3 border-b border-gray-200 dark:border-gray-700'>
                                                     <p className='text-sm font-medium truncate'>{userData.name}</p>
-                                                    <p className='text-xs text-zinc-500 truncate'>{userData.email}</p>
+                                                    <p className='text-xs text-gray-500 dark:text-gray-400 truncate'>{userData.email}</p>
                                                 </div>
 
-                                                <button className='md:hidden w-full px-4 py-3 flex items-center gap-2 text-sm border-b border-white/10 hover:bg-white/5'>
+                                                <button className='md:hidden w-full px-4 py-3 flex items-center gap-2 text-sm border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'>
                                                     <Coins size={14} className='text-yellow-400' />
-                                                    <span className='text-zinc-300'>Credits</span>
+                                                    <span className='text-gray-700 dark:text-gray-300'>Credits</span>
                                                     <span>{userData.credits}</span>
                                                     <span className='font-semibold'>+</span>
                                                 </button>
 
-                                                <button className='w-full px-4 py-3 text-left text-sm hover:bg-white/5' onClick={() => navigate("/dashboard")}>Dashboard</button>
-                                                <button className='w-full px-4 py-3 text-left text-sm text-red-400 hover:bg-white/5' onClick={handleLogOut}>Logout</button>
+                                                <button className='w-full px-4 py-3 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700' onClick={() => navigate("/dashboard")}>Dashboard</button>
+                                                <button className='w-full px-4 py-3 text-left text-sm text-red-500 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-700' onClick={handleLogOut}>Logout</button>
 
                                             </motion.div>
                                         </>
@@ -137,14 +143,14 @@ function Home() {
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className='mt-8 max-w-2xl mx-auto text-zinc-400 text-lg'
+                    className='mt-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-400 text-lg'
                 >
                     Describe your idea and let AI generate a modern,
                     responsive, production-ready website.
                 </motion.p>
 
 
-                <button className="px-10 py-4 rounded-xl bg-white text-black font-semibold hover:scale-105 transition mt-12" onClick={() =>userData? navigate("/dashboard"):setOpenLogin(true)}>{userData ? "Go to dashboard" : "Get Started"}</button>
+                <button className="px-10 py-4 rounded-xl bg-gray-900 text-white dark:bg-white dark:text-black font-semibold hover:scale-105 transition mt-12" onClick={() =>userData? navigate("/dashboard"):setOpenLogin(true)}>{userData ? "Go to dashboard" : "Get Started"}</button>
 
             </section>
             {!userData && <section className='max-w-7xl mx-auto px-6 pb-32'>
@@ -154,10 +160,10 @@ function Home() {
                             key={i}
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            className="rounded-2xl bg-white/5 border border-white/10 p-8"
+                            className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-8 shadow-sm"
                         >
                             <h1 className='text-xl font-semibold mb-3'>{h}</h1>
-                            <p className='text-sm text-zinc-400'>
+                            <p className='text-sm text-gray-600 dark:text-gray-400'>
                                 Buildex.ai builds real websites — clean code,
                                 animations, responsiveness and scalable structure.
                             </p>
@@ -178,9 +184,9 @@ function Home() {
                                 key={w._id}
                                 whileHover={{ y: -6 }}
                                 onClick={() => navigate(`/editor/${w._id}`)}
-                                className="cursor-pointer rounded-2xl bg-white/5 border border-white/10 overflow-hidden"
+                                className="cursor-pointer rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm"
                             >
-                                <div className='h-40 bg-black'>
+                                <div className='h-40 bg-gray-100 dark:bg-gray-900'>
                                     <iframe
                                         srcDoc={w.latestCode}
                                         className='w-[140%] h-[140%] scale-[0.72] origin-top-left pointer-events-none bg-white'
@@ -188,7 +194,7 @@ function Home() {
                                 </div>
                                 <div className='p-4'>
                                     <h3 className='text-base font-semibold line-clamp-2'>{w.title}</h3>
-                                    <p className='text-xs text-zinc-400'>Last Updated {""}
+                                    <p className='text-xs text-gray-500 dark:text-gray-400'>Last Updated {""}
                                         {new Date(w.updatedAt).toLocaleDateString()}
                                     </p>
                                 </div>
@@ -204,7 +210,7 @@ function Home() {
 
 
 
-            <footer className='border-t border-white/10 py-10 text-center text-sm text-zinc-500'>
+            <footer className='border-t border-gray-200 dark:border-gray-700 py-10 text-center text-sm text-gray-500 dark:text-gray-400'>
                 &copy; {new Date().getFullYear()} Buildex.ai Designed & Built with ❤️
             </footer>
 
