@@ -11,9 +11,18 @@ import { ThemeContext } from '../context/ThemeContext'
 function Home() {
 
     const highlights = [
-        "AI Generated Code",
-        "Fully Responsive Layouts",
-        "Production Ready Output",
+        {
+            title: "AI Generated Code",
+            description: "Buildex.ai builds real websites — clean code, animations, responsiveness and scalable structure."
+        },
+        {
+            title: "Fully Responsive Layouts",
+            description: "Creates websites that look perfect on every device - mobile, tablet, and desktop."
+        },
+        {
+            title: "Production Ready Output",
+            description: "Get clean, optimized, and scalable code that’s ready to deploy instantly."
+        }
     ]
 
     const [openLogin, setOpenLogin] = useState(false)
@@ -164,8 +173,7 @@ function Home() {
                         >
                             <h1 className='text-xl font-semibold mb-3'>{h}</h1>
                             <p className='text-sm text-gray-600 dark:text-gray-400'>
-                                Buildex.ai builds real websites — clean code,
-                                animations, responsiveness and scalable structure.
+                                {h.description}
                             </p>
 
                         </motion.div>
