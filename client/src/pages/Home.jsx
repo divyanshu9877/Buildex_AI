@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import LoginModal from '../components/LoginModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { Coins, Sun, Moon } from "lucide-react"
@@ -11,18 +11,9 @@ import { ThemeContext } from '../context/ThemeContext'
 function Home() {
 
     const highlights = [
-        {
-            title: "AI Generated Code",
-            description: "Buildex.ai builds real websites — clean code, animations, responsiveness and scalable structure."
-        },
-        {
-            title: "Fully Responsive Layouts",
-            description: "Creates websites that look perfect on every device - mobile, tablet, and desktop."
-        },
-        {
-            title: "Production Ready Output",
-            description: "Get clean, optimized, and scalable code that’s ready to deploy instantly."
-        }
+        "AI Generated Code",
+        "Fully Responsive Layouts",
+        "Production Ready Output",
     ]
 
     const [openLogin, setOpenLogin] = useState(false)
@@ -173,7 +164,8 @@ function Home() {
                         >
                             <h1 className='text-xl font-semibold mb-3'>{h}</h1>
                             <p className='text-sm text-gray-600 dark:text-gray-400'>
-                                {h.description}
+                                Buildex.ai builds real websites — clean code,
+                                animations, responsiveness and scalable structure.
                             </p>
 
                         </motion.div>
